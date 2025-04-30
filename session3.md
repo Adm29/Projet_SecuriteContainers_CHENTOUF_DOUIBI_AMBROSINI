@@ -43,6 +43,16 @@ kubectl get namespaces
 kubectl version --short
 ```
 
+### Explications des commandes :
+
+- sudo usermod -aG docker $USER : ajoute l’utilisateur courant au groupe docker. Cette commande permet de pouvoir lancer des conteneurs Docker sans avoir à utiliser les privilèges administrateur (root).
+  
+- curl -Lo ./kind https://kind.sigs.k8s.io/dl/VERSION/kind-linux-amd64 puis chmod +x ./kind puis sudo mv ./kind /usr/local/bin/kind : télécharge le binaire Kind pour Linux, le rend exécutable, puis le déplace dans un répertoire système.
+  
+- sudo snap install kubectl --classic : installe l’outil kubectl via Snap. Kubectl est l’interface en ligne de commande pour piloter Kubernetes.
+  
+- kind create cluster : crée un cluster Kubernetes local en utilisant Kind. Cette commande démarre un ou plusieurs conteneurs Docker qui joueront le rôle de nœuds du cluster (par défaut, un seul nœud control-plane). En quelques secondes, on obtient un cluster nommé kind prêt à l’emploi.
+  
 ---
 
 ## Partie 2 – RBAC

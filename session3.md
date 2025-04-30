@@ -43,15 +43,7 @@ kubectl get namespaces
 kubectl version --short
 ```
 
-### Explications des commandes :
 
-- sudo usermod -aG docker $USER : ajoute l’utilisateur courant au groupe docker. Cette commande permet de pouvoir lancer des conteneurs Docker sans avoir à utiliser les privilèges administrateur (root).
-  
-- curl -Lo ./kind https://kind.sigs.k8s.io/dl/VERSION/kind-linux-amd64 puis chmod +x ./kind puis sudo mv ./kind /usr/local/bin/kind : télécharge le binaire Kind pour Linux, le rend exécutable, puis le déplace dans un répertoire système.
-  
-- sudo snap install kubectl --classic : installe l’outil kubectl via Snap. Kubectl est l’interface en ligne de commande pour piloter Kubernetes.
-  
-- kind create cluster : crée un cluster Kubernetes local en utilisant Kind. Cette commande démarre un ou plusieurs conteneurs Docker qui joueront le rôle de nœuds du cluster (par défaut, un seul nœud control-plane). En quelques secondes, on obtient un cluster nommé kind prêt à l’emploi.
   
 ---
 
@@ -163,26 +155,36 @@ kubectl config use-context titi-context
 
 ### Test des permissions :
 
-- **Lister les pods :** OK
-- **Créer un pod :** Interdit – message `Forbidden`
+- **Lister les pods :**
+  
+Le retour affiche correctement la liste des pods présents dans le namespace test-rbac. Cela est normal car l’utilisateur titi possède un Role qui l’autorise à utiliser les verbes get et list sur la ressource pods. Il a donc les droits de lecture dans ce namespace.
+
+- **Créer un pod :**
+Non. Si l’on tente de créer un nouveau pod on a un message d'erreur :
+
+```bash
+Error from server (Forbidden): error when creating "mon-pod.yaml": pods is forbidden: User "titi" cannot create resource "pods" in API group "" in the namespace "test-rbac"
+```
+Cette erreur indique clairement que l’utilisateur titi ne possède pas les droits nécessaires pour créer un pod.
+
 - **Retour admin :**
+Pour retrouver tous les privilèges administrateur, il faut repasser dans le contexte d’origine à l’aide de la commande suivante :
+
 ```bash
 kubectl config use-context kind-kind
 ```
-
 ---
 
 ## Partie 3 – Scan de sécurité avec Kube-Bench
 
+Nous avons utilisé Kube-Bench, un outil open source développé par Aqua Security, pour analyser la configuration de sécurité de notre cluster Kubernetes. Cet outil vérifie automatiquement si les composants du cluster respectent les bonnes pratiques de sécurité.
+
+1. Lancer le scan avec Kube-Bench :
+   
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/aquasecurity/kube-bench/main/job.yaml
-kubectl logs job.batch/kube-bench -n kube-system
 ```
-
-### Résumé :
-- Vérifie la conformité CIS.
-- Signale les mauvaises configurations (root, audit, ports...).
-
+Cette commande télécharge et applique le manifeste YAML contenant la définition du Job kube-bench. Celui-ci va tourner brièvement sur le cluster pour effectuer une série de vérifications.
 ---
 
 ## Partie 4 – Détection avec Falco

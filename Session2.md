@@ -1,6 +1,6 @@
 # Compte rendu – Session 2 : Bonnes pratiques de sécurité des conteneurs (Windows 11 powershell + Docker Desktop)
 
-**Date :** 9 avril 2025   
+**Date :** 29 avril 2025   
 
 ---
 

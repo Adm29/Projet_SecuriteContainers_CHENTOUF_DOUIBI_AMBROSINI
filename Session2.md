@@ -34,24 +34,24 @@
 docker network create --driver bridge secure-net
 ```
 
-**Résultat – Figure 1: ![Capture 1](https://github.com/user-attachments/assets/f255c67d-8abd-4e76-a26e-1bdde908e4a5)
-;
+Résultat – Figure 1: ![Capture 1](https://github.com/user-attachments/assets/f255c67d-8abd-4e76-a26e-1bdde908e4a5)
+
 
 ```powershell
 # Lancer Nginx dans secure-net
 docker run -d --name web --network secure-net nginx
 ```
 
-**Résultat – Figure 2 :![Capture 2](https://github.com/user-attachments/assets/2fa93a73-1c70-49c6-8a33-7157027652a8)
-;
+Résultat – Figure 2 :![Capture 2](https://github.com/user-attachments/assets/2fa93a73-1c70-49c6-8a33-7157027652a8)
+
 
 ```powershell
 # Tester l’accès interne
 docker run --rm --network secure-net curlimages/curl http://web
 ```
 
-**Résultat – Figure 3 :![Capture 3](https://github.com/user-attachments/assets/e027d97b-32e9-4ccb-8298-4ca6b4375fca)
-;
+Résultat – Figure 3 :![Capture 3](https://github.com/user-attachments/assets/e027d97b-32e9-4ccb-8298-4ca6b4375fca)
+
 
 **Analyse 3.1 :** accès HTTP 200 uniquement depuis le réseau isolé.
 
@@ -63,8 +63,8 @@ docker run -d -p 8080:80 --name nginx_public nginx
 netstat -ano | findstr :8080
 ```
 
-**Résultat – Figure 4 :![Capture 4](https://github.com/user-attachments/assets/10f576a4-f942-41bc-b480-1ac43ed1ef4b)
-;
+Résultat – Figure 4 :![Capture 4](https://github.com/user-attachments/assets/10f576a4-f942-41bc-b480-1ac43ed1ef4b)
+
 
 **Analyse 3.2 :** port 8080 ouvert sur toutes interfaces → risque élevé, préférer reverse-proxy ou réseau interne.
 
@@ -86,8 +86,8 @@ cat /mnt/hosts        # lecture OK
 echo "test" >> /mnt/hosts  # Read-only file system
 ```
 
-**Résultat – Figure 5 :![capture 5](https://github.com/user-attachments/assets/44bee767-ad63-4c64-8e9a-86fcfe3aa23e)
-;
+Résultat – Figure 5 :![capture 5](https://github.com/user-attachments/assets/44bee767-ad63-4c64-8e9a-86fcfe3aa23e)
+
 
 **Analyse 4.1 :** protection efficace : aucun écrit possible dans le fichier hôte.
 
@@ -100,7 +100,7 @@ docker run --rm --net host --pid host --cap-add audit_control \
   docker/docker-bench-security:latest
 ```
 
-**Résultat – Figure 6 :![capture 6](https://github.com/user-attachments/assets/a733d3d1-1fc2-48ec-91aa-5fce2a72ca06) ;
+Résultat – Figure 6 :![capture 6](https://github.com/user-attachments/assets/a733d3d1-1fc2-48ec-91aa-5fce2a72ca06) 
 
 **Analyse 4.2 :** 105 checks exécutés, Score 10/280 (nombreux tests SKIPPED sur Docker Desktop).
 
@@ -115,7 +115,7 @@ docker run --rm --net host --pid host --cap-add audit_control \
   docker/docker-bench-security:latest -i dvwa
 ```
 
-**Résultat – Figure 7 :![Capture 7](https://github.com/user-attachments/assets/c44fd501-57cb-489b-af22-45aaf6a4a03f);
+Résultat – Figure 7 :![Capture 7](https://github.com/user-attachments/assets/c44fd501-57cb-489b-af22-45aaf6a4a03f)
 
 **Analyse 4.3 :** DVWA tourne en root sans Seccomp/AppArmor, ressources illimitées, health‑check absent.
 
@@ -154,8 +154,8 @@ export VAULT_ADDR=http://host.docker.internal:8200
 curl -s -H "X-Vault-Token: root" $VAULT_ADDR/v1/containers/mon-secret
 ```
 
-**Résultat – Figure 8 :![Capture 8 Bis](https://github.com/user-attachments/assets/934858f5-f54d-4c7a-983a-dda536e2a940)
-;
+Résultat – Figure 8 :![Capture 8 Bis](https://github.com/user-attachments/assets/934858f5-f54d-4c7a-983a-dda536e2a940)
+
 
 **Analyse 5 :** le secret est stocké et récupéré dynamiquement, aucune fuite dans l’image.
 

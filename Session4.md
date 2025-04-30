@@ -160,9 +160,9 @@ trivy-scan:
 
 - **hadolint-scan** → réussit ✅  
 - **build-image** → réussit ✅  
-- **verify_image** (Cosign v2.5.0) → réussit ✅  
+- **verify_image** (Cosign v2.5.0) → erreur  
   ![Figure 6 – Pipeline final](images/Session4_capture_6.png)  
-- **trivy-scan** → réussit ou échoue selon vulnérabilités  
+- **trivy-scan** → réussit ✅
   ![Figure 7 – Logs Trivy](images/Session4_capture_7.png)
 
 ---

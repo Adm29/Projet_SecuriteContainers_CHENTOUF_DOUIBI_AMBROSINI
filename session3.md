@@ -270,7 +270,13 @@ curl -k http://10.96.0.1:80
 
 Une fois cette commande exécutée, une deuxième alerte Falco a été déclenchée. Cette alerte indique qu’un processus à l’intérieur d’un conteneur a tenté d’accéder à l’API Kubernetes, ce qui est considéré comme une activité suspecte. Une telle action peut suggérer une tentative d’exfiltration de données ou une exploration non autorisée du cluster. Falco détecte ce comportement en surveillant les connexions réseau établies depuis les conteneurs vers l’adresse de l’API Kubernetes.
 
-**La priorité de cette alerte est  “Critical et la règle déclenché est :
+**La priorité de cette alerte est  “Critical. 
+La règle déclenchée est :
+
+```bash
+Contact K8s API Server From Containers
+```
+**Le message complet :**
 
 ```bash
 "output": "Contact K8s API Server From Container (user=root user_loginuid=0 command=curl -k http://10.96.0.1:80 container_id=... image=alpine)",

@@ -181,6 +181,8 @@ Puis `git commit && git push`.
 Le pipeline **échoue** au job **trivy-scan** :  
 Trivy détecte des vulnérabilités HIGH/CRITICAL (exit code 1).
 
+![Session4_capture 8](https://github.com/user-attachments/assets/6e8d60ed-6e18-4ea1-adf3-44b5e76bc3e1)
+
 ---
 
 > **Conclusion** :  
